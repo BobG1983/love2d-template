@@ -83,19 +83,21 @@ ECS = require "lib.concord"
 Object = require "lib.classic"
 Timer = require "lib.tick"
 Tween = require "lib.tween"
-Splashy = require "lib.splashy"
+Splash = require "lib.splashy"
 Serial = require "lib.bitser"
 SoundManager = require "lib.ripple"
 
 -- Love Callbacks
 require "app"
 local app = App()
+local loaded = false
 function love.load()
   setup_input_handling()
   setup_scene_management()
   Camera = camera()
   love.graphics.setDefaultFilter('nearest', 'nearest')
   app:load()
+  loaded = true
 end
 
 function love.update(dt)
@@ -113,7 +115,14 @@ function love.draw()
   push:finish()
 end
 
--- Hot reloading
+-- Hot Reloading
+local lurker = require "lib.lurker"
+lurker.interval = 2
+lurker.path = "./src"
+lurker.preswap = function(f) print("File " .. f .. " swapping...") end
+lurker.postswap = function(f) print("File " .. f .. " was swapped") end
+-- TODO: Make this pass the swap to the appropriate file
+
 -- Some asset loading
 -- CI using Boon
 

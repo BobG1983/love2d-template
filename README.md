@@ -5,6 +5,7 @@ A Love2D template so you don't have to reinvent the wheel every time you start a
 * Rewritten love.run to use a fixed timestep as per Free the Physics from [Gaffer on Games](https://www.gafferongames.com/post/fix_your_timestep/) 
 * Object Orientation through the Object global- via [Classic](https://github.com/BobG1983/classic)
 * Logging through the Log global - via [Log.lua](https://github.com/BobG1983/log.lua)
+  * By default set to output level "debug"
 * Screen resolution indepedent rendering - via [Push](https://github.com/BobG1983/push)
   * Edittable in main.lua, defaults to 1920x1080
 * Camera effects through the Camera global - via [Stalker-X](https://github.com/BobG1983/STALKER-X)
@@ -18,6 +19,7 @@ A Love2D template so you don't have to reinvent the wheel every time you start a
 * Serialization/Deserialization through the Serial global - via [Bitser](https://github.com/gvx/bitser)
 * Scene Management through the SceneManager global - via [Roomy](https://github.com/tesselode/roomy)
 * Sound Management through the SoundManager global - via [Ripple](https://github.com/tesselode/ripple)
+* Hot Reloading of changed lua files - via [Lurker](https://github.com/rxi/lurker)
 
 ## Shoutouts
 Many of these libraries were not developed by me but by various members of the Love2D community.  Where the library appears to have been abandoned or archived I've forked the repo and included the link to my personal fork.  In particular, thanks go out to rxi and a327ex who developed most of the above libraries.
@@ -38,3 +40,5 @@ If you find any problems with a specific library, please file it on the appropri
 At minimum, I recommend using [Visual Studio Code](https://code.visualstudio.com/) with the Love 2D Support (pixelbyte-studios.pixelbyte-love2d) and Lua (sumneko.lua) extensions.  
 
 I'd also recommend installing [LuaFormatter](https://github.com/Koihik/LuaFormatter) and the VS Code extension vscode-lua-format (koihik.vscode-lua-format), but be warned, getting LuaFormatter up and running on windows can be non-trivial, and it just provides auto code formatting, so you might not find it super valuable.
+
+For more awesome libraries you might want to include in your project check out [Awesome Love2D](https://github.com/love2d-community/awesome-love2d#input)
