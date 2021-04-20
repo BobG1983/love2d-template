@@ -52,10 +52,9 @@ Log.level = "debug"
 
 -- Static Resolution Setup
 local push = require "lib.push"
-local fixed_width, fixed_height = 1920, 1080
-local default_window_width, default_window_height = 1920, 1080
-push:setupScreen(fixed_width, fixed_height, default_window_width,
-                 default_window_height,
+local FIXED_WIDTH, FIXED_HEIGHT = 1920, 1080
+local WINDOW_WIDTH, WINDOW_HEIGHT = 1920, 1080
+push:setupScreen(FIXED_WIDTH, FIXED_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT,
                  {fullscreen = false, resizable = true, canvas = false})
 function love.resize(w, h) return push:resize(w, h) end
 
@@ -86,6 +85,7 @@ Timer = require "lib.tick"
 Tween = require "lib.tween"
 Splashy = require "lib.splashy"
 Serial = require "lib.bitser"
+SoundManager = require "lib.ripple"
 
 -- Love Callbacks
 require "app"
@@ -113,7 +113,6 @@ function love.draw()
   push:finish()
 end
 
--- Sound handling (ripple)
 -- Hot reloading
 -- Some asset loading
 -- CI using Boon

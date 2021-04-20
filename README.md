@@ -17,6 +17,7 @@ A Love2D template so you don't have to reinvent the wheel every time you start a
 * Splash Screens through the Splash global - via [Splashy](https://github.com/BobG1983/splashy)
 * Serialization/Deserialization through the Serial global - via [Bitser](https://github.com/gvx/bitser)
 * Scene Management through the SceneManager global - via [Roomy](https://github.com/tesselode/roomy)
+* Sound Management through the SoundManager global - via [Ripple](https://github.com/tesselode/ripple)
 
 ## Shoutouts
 Many of these libraries were not developed by me but by various members of the Love2D community.  Where the library appears to have been abandoned or archived I've forked the repo and included the link to my personal fork.  In particular, thanks go out to rxi and a327ex who developed most of the above libraries.
