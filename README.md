@@ -1,5 +1,5 @@
 # Bobs Love2D Template
-A Love2D template so you don't have to reinvent the wheel every time you start a new project. Heavily targetted a PC development.  It might work for iOS or Android, but that is entirely incidental
+A Love2D template so you don't have to reinvent the wheel every time you start a new project. Heavily targetted at PC development.  It might work for iOS or Android, but that is entirely incidental
 
 ## Features
 * Rewritten love.run to use a fixed timestep as per Free the Physics from [Gaffer on Games](https://www.gafferongames.com/post/fix_your_timestep/) 
