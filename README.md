@@ -22,6 +22,7 @@ A Love2D template so you don't have to reinvent the wheel every time you start a
 * Sound Management through the SoundManager global - via [Ripple](https://github.com/tesselode/ripple)
 * Hot Reloading of changed lua files - via [Lurker](https://github.com/rxi/lurker)
 * Async asset loading through the AssetLoader global - via [Lily](https://github.com/MikuAuahDark/lily)
+* A simplified Box2D wrapped through the Physics global - via [Windfield](https://github.com/BobG1983/windfield)
 * A selection of lua utility functions through the Utils global - via [Lume](https://github.com/rxi/lume)
 
 ## Shoutouts

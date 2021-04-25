@@ -93,6 +93,7 @@ Serializer = require "lib.bitser"
 SoundManager = require "lib.ripple"
 Utils = require "lib.lume"
 AssetLoader = require "lib.lily"
+Physics = require "lib.windfield"
 
 -- Love Callbacks
 require "app"
@@ -133,7 +134,6 @@ if DEBUG then
 end
 
 -- TODO: Add the following
--- Physics (Windfield - https://github.com/BobG1983/windfield)
 -- GUI
 -- CI using Boon or love-release? (https://github.com/camchenry/boon)
 
