@@ -17,4 +17,9 @@ end
 function Scene:update(dt)
   Log.warn(tostring(self) .. " does not implement update(dt)")
 end
-function Scene:draw() Log.warn(tostring(self) .. " does not implement draw()") end
+function Scene:draw_world()
+  Log.warn(tostring(self) .. " does not implement draw_world()")
+end
+function Scene:draw_ui()
+  Log.warn(tostring(self) .. " does not implement draw_ui()")
+end

@@ -1,3 +1,6 @@
+local DEBUG = true
+local USE_DEFAULT_KEYBINDS = true
+
 -- Better Game Loop (fixed timestep & autobatching)
 require "lib.autobatch"
 local TICK_RATE = 1 / 60
@@ -62,15 +65,17 @@ function love.resize(w, h) return push:resize(w, h) end
 local boipushy = require "lib.boipushy"
 local function setup_input_handling()
   Input = boipushy()
-  Input:bind('w', 'up')
-  Input:bind('s', 'down')
-  Input:bind('a', 'left')
-  Input:bind('d', 'right')
-  Input:bind('return', 'confirm')
-  Input:bind('escape', 'cancel')
-  Input:bind('mouse1', 'left_click')
-  Input:bind('mouse2', 'right_click')
-  Input:bind('mouse3', 'middle_click')
+  if USE_DEFAULT_KEYBINDS then
+    Input:bind('w', 'up')
+    Input:bind('s', 'down')
+    Input:bind('a', 'left')
+    Input:bind('d', 'right')
+    Input:bind('return', 'confirm')
+    Input:bind('escape', 'cancel')
+    Input:bind('mouse1', 'left_click')
+    Input:bind('mouse2', 'right_click')
+    Input:bind('mouse3', 'middle_click')
+  end
 end
 
 -- Scene Management
@@ -84,9 +89,10 @@ Object = require "lib.classic"
 Timer = require "lib.tick"
 Tween = require "lib.tween"
 Splash = require "lib.splashy"
-Serial = require "lib.bitser"
+Serializer = require "lib.bitser"
 SoundManager = require "lib.ripple"
 Utils = require "lib.lume"
+AssetLoader = require "lib.lily"
 
 -- Love Callbacks
 require "app"
@@ -108,25 +114,26 @@ end
 function love.draw()
   push:start()
   Camera:attach()
-  app:draw()
+  app:draw_world()
   Camera:detach()
   Camera:draw()
+  app:draw_ui()
   push:finish()
 end
 
 -- Hot Reloading
-local function preswap(filename) app:preswap(filename) end
-
-local function postswap(filename) app:postswap(filename) end
-local lurker = require "lib.lurker"
-lurker.interval = 2
-lurker.path = "./src"
-lurker.preswap = preswap
-lurker.postswap = postswap
+if DEBUG then
+  local function preswap(filename) app:preswap(filename) end
+  local function postswap(filename) app:postswap(filename) end
+  local lurker = require "lib.lurker"
+  lurker.interval = 2
+  lurker.path = "./src"
+  lurker.preswap = preswap
+  lurker.postswap = postswap
+end
 
 -- TODO: Add the following
--- Asset Loading
--- Physics (Windfield)
+-- Physics (Windfield - https://github.com/BobG1983/windfield)
 -- GUI
--- CI using Boon
+-- CI using Boon or love-release? (https://github.com/camchenry/boon)
 

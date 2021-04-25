@@ -16,4 +16,5 @@ end
 
 function App:update(dt) SceneManager:emit("update", dt) end
 
-function App:draw() SceneManager:emit("draw") end
+function App:draw_world() SceneManager:emit("draw_world") end
+function App:draw_ui() SceneManager:emit("draw_ui") end

@@ -11,4 +11,7 @@ function MainScene:leave(next, ...)
   Log.trace("Leaving MainScene to: " .. tostring(next))
 end
 function MainScene:update(dt) end
-function MainScene:draw() love.graphics.print("Hello Main Scene") end
+function MainScene:draw_world()
+  love.graphics.print("Hello Main Scene World", 10, 10)
+end
+function MainScene:draw_ui() love.graphics.print("Hello Main Scene UI", 10, 110) end
