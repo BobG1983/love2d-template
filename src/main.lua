@@ -86,6 +86,7 @@ Tween = require "lib.tween"
 Splash = require "lib.splashy"
 Serial = require "lib.bitser"
 SoundManager = require "lib.ripple"
+Utils = require "lib.lume"
 
 -- Love Callbacks
 require "app"
@@ -116,12 +117,14 @@ function love.draw()
 end
 
 -- Hot Reloading
+local function preswap(filename) app:preswap(filename) end
+
+local function postswap(filename) app:postswap(filename) end
 local lurker = require "lib.lurker"
 lurker.interval = 2
 lurker.path = "./src"
-lurker.preswap = function(f) print("File " .. f .. " swapping...") end
-lurker.postswap = function(f) print("File " .. f .. " was swapped") end
--- TODO: Make this pass the swap to the appropriate file
+lurker.preswap = preswap
+lurker.postswap = postswap
 
 -- Some asset loading
 -- CI using Boon

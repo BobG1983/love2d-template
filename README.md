@@ -19,7 +19,8 @@ A Love2D template so you don't have to reinvent the wheel every time you start a
 * Serialization/Deserialization through the Serial global - via [Bitser](https://github.com/gvx/bitser)
 * Scene Management through the SceneManager global - via [Roomy](https://github.com/tesselode/roomy)
 * Sound Management through the SoundManager global - via [Ripple](https://github.com/tesselode/ripple)
-* **[WIP]** Hot Reloading of changed lua files - via [Lurker](https://github.com/rxi/lurker)
+* Hot Reloading of changed lua files - via [Lurker](https://github.com/rxi/lurker)
+* A selection of lua utility functions through the Utils global - via [Lume](https://github.com/rxi/lume)
 
 ## Shoutouts
 Many of these libraries were not developed by me but by various members of the Love2D community.  Where the library appears to have been abandoned or archived I've forked the repo and included the link to my personal fork.  In particular, thanks go out to rxi and a327ex who developed most of the above libraries.
@@ -30,10 +31,10 @@ If you find any problems with this repo please file an issue here.
 If you find any problems with a specific library, please file it on the appropriate repo above.
 
 ## Getting Started
-1. Install Love2D
+1. Install [Love2D](https://love2d.org/)
 2. Clone this repo
 3. Start adding game code to src/scenes/main_scene.lua
-4. Call love src/main.lua to run the game _(or press Alt+L in VS Code)_
+4. Call _'love src/main.lua'_ to run the game _(or press Alt+L in VS Code)_
 
 ## Other Recommendations
 
