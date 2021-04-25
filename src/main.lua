@@ -91,14 +91,12 @@ Utils = require "lib.lume"
 -- Love Callbacks
 require "app"
 local app = App()
-local loaded = false
 function love.load()
   setup_input_handling()
   setup_scene_management()
   Camera = camera()
   love.graphics.setDefaultFilter('nearest', 'nearest')
   app:load()
-  loaded = true
 end
 
 function love.update(dt)
@@ -126,6 +124,9 @@ lurker.path = "./src"
 lurker.preswap = preswap
 lurker.postswap = postswap
 
--- Some asset loading
+-- TODO: Add the following
+-- Asset Loading
+-- Physics (Windfield)
+-- GUI
 -- CI using Boon
 
