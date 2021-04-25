@@ -13,7 +13,7 @@ A Love2D template so you don't have to reinvent the wheel every time you start a
 * ECS through the ECS global - via [Concord](https://github.com/Tjakka5/Concord)
 * Recurring/Delayed function calls through the Timer global - via [Tick](https://github.com/BobG1983/tick)
 * Input handling through the Input global - via [Boipushy](https://github.com/BobG1983/boipushy)
-  * With default bindings for up, down, left, right, confirm, cancel, left click, right click, and middle click
+  * With default bindings for up, down, left, right, quit, confirm, cancel, left click, right click, and middle click
   * Editable or removable in _'love src/main.lua'_
 * Tweening functions through the Tween global - via [Tween](https://github.com/BobG1983/tween.lua)
 * Splash Screens through the Splash global - via [Splashy](https://github.com/BobG1983/splashy)

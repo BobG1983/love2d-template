@@ -8,14 +8,11 @@ local MAX_FRAME_SKIP = 25
 function love.run()
   if love.load then love.load(love.arg.parseGameArguments(arg), arg) end
 
-  -- We don't want the first frame's dt to include time taken by love.load.
   if love.timer then love.timer.step() end
 
   local lag = 0.0
 
-  -- Main loop time.
   return function()
-    -- Process events.
     if love.event then
       love.event.pump()
       for name, a, b, c, d, e, f in love.event.poll() do
@@ -26,7 +23,6 @@ function love.run()
       end
     end
 
-    -- Cap number of Frames that can be skipped so lag doesn't accumulate
     if love.timer then
       lag = math.min(lag + love.timer.step(), TICK_RATE * MAX_FRAME_SKIP)
     end
@@ -44,7 +40,6 @@ function love.run()
       love.graphics.present()
     end
 
-    -- Even though we limit tick rate and not frame rate, we might want to cap framerate at 1000 frame rate as mentioned https://love2d.org/forums/viewtopic.php?f=4&t=76998&p=198629&hilit=love.timer.sleep#p160881
     if love.timer then love.timer.sleep(0.001) end
   end
 end
@@ -70,6 +65,7 @@ local function setup_input_handling()
     Input:bind('s', 'down')
     Input:bind('a', 'left')
     Input:bind('d', 'right')
+    Input:bind(']', "quit")
     Input:bind('return', 'confirm')
     Input:bind('escape', 'cancel')
     Input:bind('mouse1', 'left_click')
