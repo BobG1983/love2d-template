@@ -1,4 +1,4 @@
-# Project Monster
+# Template
 
 ## Features
 * Rewritten love.run to use a fixed timestep as per Free the Physics from [Gaffer on Games](https://www.gafferongames.com/post/fix_your_timestep/) 
