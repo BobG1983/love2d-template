@@ -1,5 +1,4 @@
-# Bobs Love2D Template
-A Love2D template so you don't have to reinvent the wheel every time you start a new project. Heavily targetted at PC development.  It might work for iOS or Android, but that is entirely incidental
+# Project Monster
 
 ## Features
 * Rewritten love.run to use a fixed timestep as per Free the Physics from [Gaffer on Games](https://www.gafferongames.com/post/fix_your_timestep/) 
@@ -25,14 +24,6 @@ A Love2D template so you don't have to reinvent the wheel every time you start a
 * A simplified Box2D wrapped through the Physics global - via [Windfield](https://github.com/BobG1983/windfield)
 * A selection of lua utility functions through the Utils global - via [Lume](https://github.com/rxi/lume)
 
-## Shoutouts
-Many of these libraries were not developed by me but by various members of the Love2D community.  Where the library appears to have been abandoned or archived I've forked the repo and included the link to my personal fork.  In particular, thanks go out to rxi and a327ex who developed most of the above libraries.
-
-
-## Issues
-If you find any problems with this repo please file an issue here.  
-If you find any problems with a specific library, please file it on the appropriate repo above.
-
 ## Getting Started
 1. Install [Love2D](https://love2d.org/)
 2. Clone this repo
@@ -44,5 +35,3 @@ If you find any problems with a specific library, please file it on the appropri
 At minimum, I recommend using [Visual Studio Code](https://code.visualstudio.com/) with the Love 2D Support (pixelbyte-studios.pixelbyte-love2d) and Lua (sumneko.lua) extensions.  
 
 I'd also recommend installing [LuaFormatter](https://github.com/Koihik/LuaFormatter) and the VS Code extension vscode-lua-format (koihik.vscode-lua-format). This involves installing the VS Build Tools, lua-for-windows, and using luarocks to install luacheck and luaformatter.
-
-For more awesome libraries you might want to include in your project check out [Awesome Love2D](https://github.com/love2d-community/awesome-love2d#input)

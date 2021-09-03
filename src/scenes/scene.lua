@@ -1,7 +1,6 @@
 -- Core Scene Class
 Scene = Object:extend("Scene")
 
-function Scene:new() Log.warn(tostring(self) .. " does not implement new()") end
 function Scene:preswap(filename)
   Log.warn(tostring(self) .. " does not implement preswap(filename)")
 end
