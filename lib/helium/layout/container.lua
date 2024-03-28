@@ -1,8 +1,9 @@
-local path   = string.sub(..., 1, string.len(...) - string.len(".container"))
-local layout = require(path..'.layout')
+---@diagnostic disable: undefined-global, undefined-field
+local path        = string.sub(..., 1, string.len(...) - string.len(".container"))
+local layout      = require(path .. '.layout')
 
 ---@class Container
-local container = {}
+local container   = {}
 container.__index = container
 
 ---Positions an element within a container
@@ -14,7 +15,7 @@ function container.new(halign, valign)
 		halign = halign or 'left',
 		valign = valign or 'top',
 	}, container)
-	
+
 	return layout(self, self.draw)
 end
 
@@ -23,11 +24,11 @@ local function alignLeft(x, wroot, wchild)
 end
 
 local function alignCenter(x, wroot, wchild)
-	return x+(wroot/2-wchild/2)
+	return x + (wroot / 2 - wchild / 2)
 end
 
 local function alignRight(x, wroot, wchild)
-	return x+(wroot-wchild)
+	return x + (wroot - wchild)
 end
 
 
@@ -53,16 +54,16 @@ end
 
 function container:draw(x, y, width, height, children, hpad, vpad, alignX)
 	local w, h = children[1]:getSize()
-	local x, y 
+	local x, y
 
-	if self.halign =='stretch' then
+	if self.halign == 'stretch' then
 		w = width
 		x = x
 	else
 		x = alignHandlerX(self.halign, containerX, containerWidth, w)
 	end
 
-	if self.valign =='stretch' then
+	if self.valign == 'stretch' then
 		h = h
 		y = y
 	else

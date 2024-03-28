@@ -88,7 +88,7 @@ push:setupScreen(
   FIXED_HEIGHT,
   WINDOW_WIDTH,
   WINDOW_HEIGHT,
-  {fullscreen = false, resizable = true, canvas = false}
+  { fullscreen = false, resizable = true, canvas = false }
 )
 function love.resize(w, h)
   return push:resize(w, h)
@@ -153,6 +153,7 @@ function love.update(dt)
   app:update(dt)
 end
 
+---@diagnostic disable-next-line: duplicate-set-field
 function love.draw()
   push:start()
   Camera:attach()

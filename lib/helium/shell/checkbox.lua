@@ -1,6 +1,7 @@
+---@diagnostic disable: redefined-local, undefined-doc-param
 local path = string.sub(..., 1, string.len(...) - string.len(".shell.checkbox"))
-local state = require(path.. ".hooks.state")
-local input = require(path.. ".core.input")
+local state = require(path .. ".hooks.state")
+local input = require(path .. ".core.input")
 
 ---@class checkboxState
 ---@param down boolean @indicates whether this element is currently held down
@@ -27,7 +28,7 @@ return function(onClick, onRelease, onEnter, onExit, startOn, x, y, w, h)
 	checkbox.toggled = startOn
 	input('clicked', function(x, y, w, h)
 		checkbox.down = true
-		
+
 		if onClick then
 			onClick(x, y, w, h)
 		end
@@ -41,7 +42,7 @@ return function(onClick, onRelease, onEnter, onExit, startOn, x, y, w, h)
 		end
 	end)
 
-	input('hover', function(x, y, w, h) 
+	input('hover', function(x, y, w, h)
 		if onEnter then
 			onEnter(x, y, w, h)
 		end

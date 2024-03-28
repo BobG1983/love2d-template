@@ -19,7 +19,7 @@
 * Serialization/Deserialization through the Serializer global - via [Bitser](https://github.com/gvx/bitser)
 * Scene Management through the SceneManager global - via [Roomy](https://github.com/tesselode/roomy)
 * Sound Management through the SoundManager global - via [Ripple](https://github.com/tesselode/ripple)
-* Hot Reloading of changed lua files - via [Lurker](https://github.com/rxi/lurker)
+* Hot Reloading of changed lua files - via [Lick](https://github.com/usysrc/LICK)
 * Async asset loading through the AssetLoader global - via [Lily](https://github.com/MikuAuahDark/lily)
 * A simplified Box2D wrapped through the Physics global - via [Windfield](https://github.com/BobG1983/windfield)
 * A selection of lua utility functions through the Utils global - via [Lume](https://github.com/rxi/lume)
@@ -34,4 +34,4 @@
 
 At minimum, I recommend using [Visual Studio Code](https://code.visualstudio.com/) with the Love 2D Support (pixelbyte-studios.pixelbyte-love2d) and Lua (sumneko.lua) extensions.  
 
-I'd also recommend installing [LuaFormatter](https://github.com/Koihik/LuaFormatter) and the VS Code extension vscode-lua-format (koihik.vscode-lua-format). This involves installing the VS Build Tools, lua-for-windows, and using luarocks to install luacheck and luaformatter.
+I'd also recommend installing [the LUA Language Server](https://marketplace.visualstudio.com/items?itemName=sumneko.lua).

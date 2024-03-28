@@ -1,13 +1,14 @@
-local path   = string.sub(..., 1, string.len(...) - string.len(".layout.layout"))
+---@diagnostic disable: undefined-global, undefined-field
+local path     = string.sub(..., 1, string.len(...) - string.len(".layout.layout"))
 
 ---@class layout
 ---@field protected vars table
 ---@field protected type function
-local layout = {}
-local layouts = {}
+local layout   = {}
+local layouts  = {}
 layout.__index = layout
-local element = require(path..'.core.element')
-local stack = require(path..'.core.stack')
+local element  = require(path .. '.core.element')
+local stack    = require(path .. '.core.stack')
 
 --Start prep phase
 function layout.type(binder, callback)
@@ -16,16 +17,16 @@ function layout.type(binder, callback)
 
 	local self = {
 		vars = {
-			width   = 1,
-			hpad    = 3,
-			vpad    = 3,
-			height  = 1,
+			width  = 1,
+			hpad   = 3,
+			vpad   = 3,
+			height = 1,
 		},
 		stack = curStack,
 		binder = binder,
 		callback = callback,
 	}
-	
+
 	return setmetatable(self, layout)
 end
 
@@ -41,7 +42,7 @@ end
 ---@param pos 'top'|'center'|'bottom'
 function layout:alignHoriz(pos)
 	self.vars.alignX = pos
-	
+
 	return self
 end
 
@@ -49,7 +50,7 @@ end
 ---@param w number width in pixels or absolute 0-1
 function layout:width(w)
 	self.vars.width = w
-	
+
 	return self
 end
 
@@ -60,6 +61,7 @@ function layout:height(h)
 
 	return self
 end
+
 ---Offset from the left
 ---@param x number offset in pixels or absolute 0-1
 function layout:left(x)
@@ -72,7 +74,7 @@ end
 ---@param x number offset in pixels or absolute 0-1
 function layout:right(x)
 	self.vars.offRight = x
-	
+
 	return self
 end
 
@@ -111,14 +113,14 @@ end
 --Schemes: left + right = width ignored
 --top + bottom = height ignored
 --top px + bottom relative works
---left relative + bottom px works 
+--left relative + bottom px works
 
 
 function layout:draw()
 	local stack = self.stack
 	local children = stack:stopDeferingChildren()
 	local height, width, x, y, _, marginV, marginH
-	local maxW, maxH = stack:normalizeSize(1,1)
+	local maxW, maxH = stack:normalizeSize(1, 1)
 
 	if self.vars.offTop and self.vars.offBot then
 		marginV = stack:normY(self.vars.offTop) + stack:normY(self.vars.offBot)
@@ -126,11 +128,11 @@ function layout:draw()
 		y = stack:normY(self.vars.offTop)
 	elseif self.vars.offBot then
 		y = stack:normY(self.vars.offBot)
-		height = math.min(stack:normY(self.vars.height), maxH-y)
+		height = math.min(stack:normY(self.vars.height), maxH - y)
 		y = maxH - height - y
-	else 
+	else
 		y = stack:normY(self.vars.offTop or 0)
-		height = math.min(stack:normY(self.vars.height), maxH-y)
+		height = math.min(stack:normY(self.vars.height), maxH - y)
 	end
 
 	if self.vars.offLeft and self.vars.offRight then
@@ -139,16 +141,15 @@ function layout:draw()
 		x = stack:normX(self.vars.offLeft)
 	elseif self.vars.offRight then
 		x = stack:normX(self.vars.offRight)
-		width = math.min(stack:normX(self.vars.width), maxW-x)
-		x = maxW - width -h
+		width = math.min(stack:normX(self.vars.width), maxW - x)
+		x = maxW - width - h
 	else
 		x = stack:normX(self.vars.offLeft or 0)
-		width = math.min(stack:normX(self.vars.width), maxW-x)
+		width = math.min(stack:normX(self.vars.width), maxW - x)
 	end
 
 	self.callback(self.binder, x, y, width, height, children, self.vars.hpad, self.vars.vpad)
 end
 
-
-setmetatable(layout, {__call = function(s, binder, callback) return layout.type(binder, callback) end })
+setmetatable(layout, { __call = function(s, binder, callback) return layout.type(binder, callback) end })
 return layout

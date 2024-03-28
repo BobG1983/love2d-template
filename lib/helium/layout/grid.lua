@@ -1,7 +1,8 @@
-local column = require "helium.layout.column"
+---@diagnostic disable: missing-fields, assign-type-mismatch, param-type-mismatch
+local column            = require "helium.layout.column"
 --my copy of the cssssss grids
-local path   = string.sub(..., 1, string.len(...) - string.len(".grid"))
-local layout = require(path..'.layout')
+local path              = string.sub(..., 1, string.len(...) - string.len(".grid"))
+local layout            = require(path .. '.layout')
 
 ---@class GridCell
 ---@field name string @Will find the element with the relevant flag
@@ -24,13 +25,13 @@ local layout = require(path..'.layout')
 ---@field layout GridLayout|nil @preconfigured layout table
 ---@field rows HGridRow|number|nil @set these instead of layout if you just want a regularly spaced 'table'
 ---@field columns WGridCol|number|nil @set these instead of layout if you just want a regularly spaced 'table' leave empty to flow in as many elements as you have
----@field verticalStretchMode "'stretch'"|"'normal'" 
+---@field verticalStretchMode "'stretch'"|"'normal'"
 ---@field horizontalStretchMode "'stretch'"|"'normal'"
 ---@field horizontalAlignMode "'left'"|"'center'"|"'right'"
 ---@field verticalAlignMode "'top'"|"'center'"|"'bottom'"
 ---@field rowSpacing number @size in pixels to space the rows
 ---@field colSpacing number @size in pixels to space the columns
----@field rowSizeMode "'relative'"|"'absolute'" 
+---@field rowSizeMode "'relative'"|"'absolute'"
 ---@field colSizeMode "'relative'"|"'absolute'"
 
 ---@type GridConfig
@@ -41,18 +42,18 @@ local preconfiguredGrid = {
 	horizontalStretchMode = 'stretch',
 	verticalAlignMode = 'center',
 	horizontalAlignMode = 'center',
-	rows = {5,5},
-	columns = {1,3,1},
+	rows = { 5, 5 },
+	columns = { 1, 3, 1 },
 	layout = {
-		{'sidebar','content','sidebar2'},
-		{'sidebar','content','sidebar2'},
+		{ 'sidebar', 'content', 'sidebar2' },
+		{ 'sidebar', 'content', 'sidebar2' },
 	}
 }
 
 ---@class grid
 ---@field gridLayout GridConfig
-local grid = {}
-grid.__index = grid
+local grid              = {}
+grid.__index            = grid
 
 ---@param gridLayout GridConfig
 ---@return layout
@@ -70,11 +71,11 @@ local function alignLeft(x, wroot, wchild)
 end
 
 local function alignCenter(x, wroot, wchild)
-	return x+(wroot/2-wchild/2)
+	return x + (wroot / 2 - wchild / 2)
 end
 
 local function alignRight(x, wroot, wchild)
-	return x+(wroot-wchild)
+	return x + (wroot - wchild)
 end
 
 
@@ -116,9 +117,9 @@ function grid:draw(xRoot, yRoot, width, height, children)
 		if not self.gridLayout.rows then
 			autoRows = true
 		else
-			if type(self.gridLayout.rows)=="table" then
+			if type(self.gridLayout.rows) == "table" then
 				local total = 0
-				
+
 				for i, col in ipairs(self.gridLayout.rows) do
 					YIndexes[i] = {}
 
@@ -126,23 +127,23 @@ function grid:draw(xRoot, yRoot, width, height, children)
 					total = total + col
 					YIndexes[i].finish = total
 				end
-				
-				vertValueToPixels = height/total
+
+				vertValueToPixels = height / total
 			else
-				vertValueToPixels = height/self.gridLayout.rows
-				
+				vertValueToPixels = height / self.gridLayout.rows
+
 				for y = 1, self.gridLayout.rows do
 					YIndexes[y] = {}
-					YIndexes[y].start = y-1
+					YIndexes[y].start = y - 1
 					YIndexes[y].finish = y
 				end
-				
+
 				equalRows = true
 			end
 		end
-		if type(self.gridLayout.columns)=="table" then
+		if type(self.gridLayout.columns) == "table" then
 			local total = 0
-			
+
 			for i, col in ipairs(self.gridLayout.columns) do
 				XIndexes[i] = {}
 
@@ -150,14 +151,14 @@ function grid:draw(xRoot, yRoot, width, height, children)
 				total = total + col
 				XIndexes[i].finish = total
 			end
-			
-			horValueToPixels = width/total
+
+			horValueToPixels = width / total
 		else
-			horValueToPixels = width/self.gridLayout.columns
+			horValueToPixels = width / self.gridLayout.columns
 
 			for x = 1, self.gridLayout.columns do
 				XIndexes[x] = {}
-				XIndexes[x].start = x-1
+				XIndexes[x].start = x - 1
 				XIndexes[x].finish = x
 			end
 
@@ -169,34 +170,33 @@ function grid:draw(xRoot, yRoot, width, height, children)
 			autoRows = true
 		else
 			autoCols = true
-			if type(self.gridLayout.rows)=="table" then
+			if type(self.gridLayout.rows) == "table" then
 				local total = 0
-				
+
 				for i, col in ipairs(self.gridLayout.rows) do
 					total = total + col
 				end
-				
-				vertValueToPixels = (height)/total
+
+				vertValueToPixels = (height) / total
 			else
-				vertValueToPixels = (height)/self.gridLayout.rows
+				vertValueToPixels = (height) / self.gridLayout.rows
 				equalRows = true
 			end
 		end
 	end
 
 	if (not autoRows) and (not autoCols) then
-
 		if self.gridLayout.layout then
 			local layout = {}
 			--flip layout table
 			for x = 1, #self.gridLayout.layout[1] do
 				layout[x] = {}
-			end 
+			end
 
 			for x = 1, #self.gridLayout.layout do
 				for y = 1, #self.gridLayout.layout[x] do
 					layout[y][x] = self.gridLayout.layout[x][y]
-				end 
+				end
 			end
 
 			local layoutDepth, layoutWidth = #self.gridLayout.layout, #layout
@@ -225,7 +225,7 @@ function grid:draw(xRoot, yRoot, width, height, children)
 
 			for x = 1, #layout do
 				for y = 1, #layout[x] do
-					if not fields[layout[x][y]] then	
+					if not fields[layout[x][y]] then
 						local finishedRow = false
 						local finishedCol = false
 						local curField = layout[x][y]
@@ -236,7 +236,7 @@ function grid:draw(xRoot, yRoot, width, height, children)
 						fields[curField].finX = XIndexes[x].finish
 						fields[curField].finY = YIndexes[y].finish
 
-						local parseX, parseY = x+1, y+1
+						local parseX, parseY = x + 1, y + 1
 						while not finishedRow do
 							if layout[x][parseY] and layout[x][parseY] == curField then
 								fields[curField].finY = YIndexes[parseY].finish
@@ -271,53 +271,53 @@ function grid:draw(xRoot, yRoot, width, height, children)
 
 			for i, field in pairs(fields) do
 				if field.element then
-					local containerWidth = (field.w*horValueToPixels)-(self.gridLayout.colSpacing)
-					local containerHeight = (field.h*vertValueToPixels)-(self.gridLayout.rowSpacing)
+					local containerWidth = (field.w * horValueToPixels) - (self.gridLayout.colSpacing)
+					local containerHeight = (field.h * vertValueToPixels) - (self.gridLayout.rowSpacing)
 
-					local containerX = ((field.x)*horValueToPixels)+(self.gridLayout.colSpacing/2)
-					local containerY = ((field.y)*vertValueToPixels)+(self.gridLayout.rowSpacing/2)
+					local containerX = ((field.x) * horValueToPixels) + (self.gridLayout.colSpacing / 2)
+					local containerY = ((field.y) * vertValueToPixels) + (self.gridLayout.rowSpacing / 2)
 
 					local w, h = field.element:getSize()
-					local x, y 
+					local x, y
 
-					if self.gridLayout.horizontalStretchMode =='stretch' then
+					if self.gridLayout.horizontalStretchMode == 'stretch' then
 						w = containerWidth
 						x = containerX
 					else
 						x = alignHandlerX(self.gridLayout.horizontalAlignMode, containerX, containerWidth, w)
 					end
 
-					if self.gridLayout.verticalStretchMode =='stretch' then
+					if self.gridLayout.verticalStretchMode == 'stretch' then
 						h = containerHeight
 						y = containerY
 					else
 						y = alignHandlerY(self.gridLayout.verticalAlignMode, containerY, containerHeight, h)
 					end
 
-					field.element:draw(x+xRoot, y+yRoot, w, h)
+					field.element:draw(x + xRoot, y + yRoot, w, h)
 				end
 			end
 		else
 			error('please provide a layout table')
 		end
-	elseif fullyAutoLayout then--one element per width, vertically down
+	elseif fullyAutoLayout then --one element per width, vertically down
 		local carriagePos = 0
 		if children then
 			for i, e in ipairs(children) do
 				local w, h = e:getSize()
 
-				if self.gridLayout.horizontalStretchMode =='stretch' then
+				if self.gridLayout.horizontalStretchMode == 'stretch' then
 					w = width
-					e:draw(xRoot, yRoot+carriagePos, w)
+					e:draw(xRoot, yRoot + carriagePos, w)
 				else
 					local x = alignHandlerX(self.gridLayout.horizontalAlignMode, xRoot, width, w)
-					e:draw(x, yRoot+carriagePos)
+					e:draw(x, yRoot + carriagePos)
 				end
 
 				carriagePos = carriagePos + self.gridLayout.rowSpacing + h
 			end
 		end
-	elseif autoCols then--one element per width, rows spaced
+	elseif autoCols then --one element per width, rows spaced
 		local carriagePos = 0
 		local row = 1
 		local lastRowSize = 1
@@ -331,19 +331,19 @@ function grid:draw(xRoot, yRoot, width, height, children)
 				if equalRows then
 					rowSize = 1 * vertValueToPixels
 				else
-					rowSize = (self.gridLayout.rows[row] or lastRowSize)*vertValueToPixels
+					rowSize = (self.gridLayout.rows[row] or lastRowSize) * vertValueToPixels
 				end
 
 				rowSize = math.max(h, rowSize)
 
-				if self.gridLayout.horizontalStretchMode =='stretch' then
+				if self.gridLayout.horizontalStretchMode == 'stretch' then
 					w = width
 					x = xRoot
 				else
 					x = alignHandlerX(self.gridLayout.horizontalAlignMode, xRoot, width, w)
 				end
 
-				if self.gridLayout.verticalStretchMode =='stretch' then
+				if self.gridLayout.verticalStretchMode == 'stretch' then
 					h = rowSize
 					y = carriagePos
 				else
@@ -356,7 +356,7 @@ function grid:draw(xRoot, yRoot, width, height, children)
 				row = row + 1
 			end
 		end
-	elseif autoRows then--flow the elements freely vertically, space columns according to layout
+	elseif autoRows then --flow the elements freely vertically, space columns according to layout
 		local carriagePos = 0
 		local row = 1
 		local colDrawStart = 0
@@ -372,7 +372,7 @@ function grid:draw(xRoot, yRoot, width, height, children)
 		else
 			rowWidth = #self.gridLayout.columns
 		end
-		 
+
 
 		if children then
 			for i, e in ipairs(children) do
@@ -388,14 +388,14 @@ function grid:draw(xRoot, yRoot, width, height, children)
 
 				currentRowMax = math.max(currentRowMax, h)
 
-				if self.gridLayout.horizontalStretchMode =='stretch' then
+				if self.gridLayout.horizontalStretchMode == 'stretch' then
 					w = colSize
 					x = colDrawStart
 				else
 					x = alignHandlerX(self.gridLayout.horizontalAlignMode, colDrawStart, colSize, w)
 				end
 
-				e:draw(x, yRoot+carriagePos, w, h)
+				e:draw(x, yRoot + carriagePos, w, h)
 
 				colDrawStart = colDrawStart + colSize + self.gridLayout.colSpacing
 

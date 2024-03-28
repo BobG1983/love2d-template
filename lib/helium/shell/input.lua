@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-doc-param
 local path = string.sub(..., 1, string.len(...) - string.len(".shell.input"))
 local state = require(path.. ".hooks.state")
 local input = require(path.. ".core.input")

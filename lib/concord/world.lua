@@ -1,20 +1,21 @@
+---@diagnostic disable: redundant-parameter
 --- A collection of Systems and Entities.
 -- A world emits to let Systems iterate.
 -- A World contains any amount of Systems.
 -- A World contains any amount of Entities.
 -- @classmod World
 
-local PATH = (...):gsub('%.[^%.]+$', '')
+local PATH   = (...):gsub('%.[^%.]+$', '')
 
-local Entity = require(PATH..".entity")
-local Type   = require(PATH..".type")
-local List   = require(PATH..".list")
-local Utils  = require(PATH..".utils")
+local Entity = require(PATH .. ".entity")
+local Type   = require(PATH .. ".type")
+local List   = require(PATH .. ".list")
+local Utils  = require(PATH .. ".utils")
 
-local World = {
+local World  = {
    ENABLE_OPTIMIZATION = true,
 }
-World.__mt = {
+World.__mt   = {
    __index = World,
 }
 
@@ -23,19 +24,22 @@ World.__mt = {
 function World.new()
    local world = setmetatable({
       __entities = List(),
-      __systems  = List(),
+      __systems = List(),
 
-      __events     = {},
+      __events = {},
       __emitSDepth = 0,
 
-      __added   = List(), __backAdded   = List(),
-      __removed = List(), __backRemoved = List(),
-      __dirty   = List(), __backDirty   = List(),
+      __added = List(),
+      __backAdded = List(),
+      __removed = List(),
+      __backRemoved = List(),
+      __dirty = List(),
+      __backDirty = List(),
 
       __systemLookup = {},
 
-      __name    = nil,
-      __isWorld = true,
+      __name         = nil,
+      __isWorld      = true,
    }, World.__mt)
 
    -- Optimization: We deep copy the World class into our instance of a world.
@@ -53,7 +57,7 @@ end
 -- @treturn World self
 function World:addEntity(e)
    if not Type.isEntity(e) then
-      error("bad argument #1 to 'World:addEntity' (Entity expected, got "..type(e)..")", 2)
+      error("bad argument #1 to 'World:addEntity' (Entity expected, got " .. type(e) .. ")", 2)
    end
 
    if e.__world then
@@ -71,7 +75,7 @@ end
 -- @treturn World self
 function World:removeEntity(e)
    if not Type.isEntity(e) then
-      error("bad argument #1 to 'World:removeEntity' (Entity expected, got "..type(e)..")", 2)
+      error("bad argument #1 to 'World:removeEntity' (Entity expected, got " .. type(e) .. ")", 2)
    end
 
    self.__removed:add(e)
@@ -97,9 +101,9 @@ function World:__flush()
    end
 
    -- Switch buffers
-   self.__added,   self.__backAdded   = self.__backAdded,   self.__added
+   self.__added, self.__backAdded     = self.__backAdded, self.__added
    self.__removed, self.__backRemoved = self.__backRemoved, self.__removed
-   self.__dirty,   self.__backDirty   = self.__backDirty,   self.__dirty
+   self.__dirty, self.__backDirty     = self.__backDirty, self.__dirty
 
    local e
 
@@ -158,9 +162,9 @@ local blacklistedSystemFunctions = {
    "onDisabled",
 }
 
-local tryAddSystem = function (world, systemClass)
+local tryAddSystem = function(world, systemClass)
    if (not Type.isSystemClass(systemClass)) then
-      return false, "SystemClass expected, got "..type(systemClass)
+      return false, "SystemClass expected, got " .. type(systemClass)
    end
 
    if (world.__systemLookup[systemClass]) then
@@ -208,7 +212,7 @@ function World:addSystem(systemClass)
    local ok, err = tryAddSystem(self, systemClass)
 
    if not ok then
-      error("bad argument #1 to 'World:addSystem' ("..err..")", 2)
+      error("bad argument #1 to 'World:addSystem' (" .. err .. ")", 2)
    end
 
    return self
@@ -226,7 +230,7 @@ function World:addSystems(...)
 
       local ok, err = tryAddSystem(self, systemClass)
       if not ok then
-         error("bad argument #"..i.." to 'World:addSystems' ("..err..")", 2)
+         error("bad argument #" .. i .. " to 'World:addSystems' (" .. err .. ")", 2)
       end
    end
 
@@ -238,7 +242,7 @@ end
 -- @treturn boolean
 function World:hasSystem(systemClass)
    if not Type.isSystemClass(systemClass) then
-      error("bad argument #1 to 'World:getSystem' (systemClass expected, got "..type(systemClass)..")", 2)
+      error("bad argument #1 to 'World:getSystem' (systemClass expected, got " .. type(systemClass) .. ")", 2)
    end
 
    return self.__systemLookup[systemClass] and true or false
@@ -249,7 +253,7 @@ end
 -- @treturn System System to get
 function World:getSystem(systemClass)
    if not Type.isSystemClass(systemClass) then
-      error("bad argument #1 to 'World:getSystem' (systemClass expected, got "..type(systemClass)..")", 2)
+      error("bad argument #1 to 'World:getSystem' (systemClass expected, got " .. type(systemClass) .. ")", 2)
    end
 
    return self.__systemLookup[systemClass]
@@ -262,14 +266,14 @@ end
 -- @treturn World self
 function World:emit(functionName, ...)
    if not functionName or type(functionName) ~= "string" then
-      error("bad argument #1 to 'World:emit' (String expected, got "..type(functionName)..")")
+      error("bad argument #1 to 'World:emit' (String expected, got " .. type(functionName) .. ")")
    end
 
    local shouldFlush = self.__emitSDepth == 0
 
    self.__emitSDepth = self.__emitSDepth + 1
 
-	local listeners = self.__events[functionName]
+   local listeners = self.__events[functionName]
 
    if listeners then
       for i = 1, #listeners do

@@ -1,6 +1,7 @@
+---@diagnostic disable: redundant-parameter
 local path = string.sub(..., 1, string.len(...) - string.len(".shell.button"))
-local state = require(path.. ".hooks.state")
-local input = require(path.. ".core.input")
+local state = require(path .. ".hooks.state")
+local input = require(path .. ".core.input")
 
 local function clamp(num, min, max)
 	local min, max = min or 0, max or 1
@@ -8,15 +9,15 @@ local function clamp(num, min, max)
 end
 
 local function round(num)
-	return math.floor(num+0.5)
+	return math.floor(num + 0.5)
 end
 
 local function calcPercent(min, val, max)
-	return clamp((val-min)/(max - min))
+	return clamp((val - min) / (max - min))
 end
 
 local function mapToValueRange(pct, minVal, maxVal, divider)
-	return (round(((maxVal-minVal)*pct) / divider) * divider)+minVal
+	return (round(((maxVal - minVal) * pct) / divider) * divider) + minVal
 end
 
 local function mapCoordToVal(minCoord, maxCoord, minVal, maxVal, divider, coord)
@@ -59,7 +60,7 @@ return function(values, w, h, onChange, onFinish, onClick, onRelease, onEnter, o
 	local vertical = h > w
 	local originx, originy = x or 0, y or 0
 	local slider = state {
-		value = values.value or ((values.max - values.min)/2)+values.min or 0,
+		value = values.value or ((values.max - values.min) / 2) + values.min or 0,
 		divisions = values.divider or 1,
 		min = values.min or 0,
 		max = values.max or values.value or 0,
@@ -106,10 +107,10 @@ return function(values, w, h, onChange, onFinish, onClick, onRelease, onEnter, o
 				onFinish(slider.value)
 			end
 		end
-	end, nil, originx, originy )
+	end, nil, originx, originy)
 
 
-	input('hover', function(x, y, w, h) 
+	input('hover', function(x, y, w, h)
 		if onEnter then
 			onEnter(x, y, w, h)
 		end
@@ -123,7 +124,7 @@ return function(values, w, h, onChange, onFinish, onClick, onRelease, onEnter, o
 
 			handle.over = false
 		end
-	end, nil, originx, originy )
+	end, nil, originx, originy)
 
 	return slider, handle
 end

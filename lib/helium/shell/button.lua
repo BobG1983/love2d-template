@@ -1,6 +1,7 @@
+---@diagnostic disable: undefined-doc-param
 local path = string.sub(..., 1, string.len(...) - string.len(".shell.button"))
-local state = require(path.. ".hooks.state")
-local input = require(path.. ".core.input")
+local state = require(path .. ".hooks.state")
+local input = require(path .. ".core.input")
 
 ---@class buttonState
 ---@param down boolean @indicates whether this element is currently being pressed
@@ -27,7 +28,7 @@ return function(onClick, onRelease, onEnter, onExit, x, y, w, h)
 		end
 
 		button.down = true
-		
+
 		return function(x, y, w, h)
 			if onRelease then
 				onRelease(x, y, w, h)
@@ -36,7 +37,7 @@ return function(onClick, onRelease, onEnter, onExit, x, y, w, h)
 		end
 	end)
 
-	input('hover', function(x, y, w, h) 
+	input('hover', function(x, y, w, h)
 		if onEnter then
 			onEnter(x, y, w, h)
 		end

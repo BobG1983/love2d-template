@@ -1,26 +1,29 @@
+---@diagnostic disable: redundant-parameter, inject-field, undefined-field, undefined-doc-name
 --[[--------------------------------------------------
 	Helium UI by qfx (qfluxstudios@gmail.com)
 	Copyright (c) 2021 Elmārs Āboliņš
 	https://github.com/qeffects/helium
 ----------------------------------------------------]]
-local path   = string.sub(..., 1, string.len(...) - string.len(".core.input"))
-local stack = require(path .. ".core.stack")
-local helium = require(path .. ".dummy")
+local path                     = string.sub(..., 1, string.len(...) - string.len(".core.input"))
+local stack                    = require(path .. ".core.stack")
+local helium                   = require(path .. ".dummy")
 
-local input = {
+local input                    = {
 	eventHandlers = {},
-	subscriptions = setmetatable({}, {__index = function (t, index)
-		return helium.scene.activeScene and helium.scene.activeScene.subscriptions[index] or nil
-	end,
-	__newindex = function(t, index, val)
-		helium.scene.activeScene.subscriptions[index] = val
-	end}),
+	subscriptions = setmetatable({}, {
+		__index = function(t, index)
+			return helium.scene.activeScene and helium.scene.activeScene.subscriptions[index] or nil
+		end,
+		__newindex = function(t, index, val)
+			helium.scene.activeScene.subscriptions[index] = val
+		end
+	}),
 	activeEvents  = {}
 }
-input.__index = input
+input.__index                  = input
 
 --Middle man functions
-local orig = {
+local orig                     = {
 	mousepressed = love.handlers['mousepressed'],
 	mousereleased = love.handlers['mousereleased'],
 	textinput = love.handlers['textinput'],
@@ -29,32 +32,32 @@ local orig = {
 	mousemoved = love.handlers['mousemoved']
 }
 
-love.handlers['mousepressed'] = function(x, y, btn, d, e, f)
-	if not input.eventHandlers.mousepressed(x, y, btn, d, e ,f) then
+love.handlers['mousepressed']  = function(x, y, btn, d, e, f)
+	if not input.eventHandlers.mousepressed(x, y, btn, d, e, f) then
 		orig.mousepressed(x, y, btn, d, e, f)
 	end
 end
 love.handlers['mousereleased'] = function(x, y, btn, d, e, f)
-	if not input.eventHandlers.mousereleased(x, y, btn, d, e ,f) then
+	if not input.eventHandlers.mousereleased(x, y, btn, d, e, f) then
 		orig.mousereleased(x, y, btn, d, e, f)
 	end
 end
-love.handlers['keypressed'] = function(key, b, c, d, e, f)
+love.handlers['keypressed']    = function(key, b, c, d, e, f)
 	if not input.eventHandlers.keypressed(key, b, c, d, e, f) then
 		orig.keypressed(key, b, c, d, e, f)
 	end
 end
-love.handlers['keyreleased'] = function(key, b, c, d, e, f)
+love.handlers['keyreleased']   = function(key, b, c, d, e, f)
 	if not input.eventHandlers.keyreleased(key, b, c, d, e, f) then
 		orig.keyreleased(key, b, c, d, e, f)
 	end
 end
-love.handlers['textinput'] = function(text, b, c, d, e, f)
+love.handlers['textinput']     = function(text, b, c, d, e, f)
 	if not input.eventHandlers.textinput(text, b, c, d, e, f) then
 		orig.textinput(text, b, c, d, e, f)
 	end
 end
-love.handlers['mousemoved'] = function(x, y, dx, dy, e, f)
+love.handlers['mousemoved']    = function(x, y, dx, dy, e, f)
 	if not input.eventHandlers.mousemoved(x, y, dx, dy, e, f) then
 		orig.mousemoved(x, y, dx, dy, e, f)
 	end
@@ -65,7 +68,7 @@ local function sortFunc(t1, t2)
 		return false
 	end
 	return t1.stack.temporalZ.z > t2.stack.temporalZ.z
-end 
+end
 
 function input.sortZ()
 	for i, subs in pairs(input.subscriptions) do
@@ -73,7 +76,7 @@ function input.sortZ()
 	end
 end
 
-local dummyfunc = function() end
+local dummyfunc      = function() end
 ---@class subscription
 local subscription   = {}
 subscription.__index = subscription
@@ -129,12 +132,12 @@ function subscription.create(x, y, w, h, eventType, callback, doff)
 		active    = true,
 		stack     = stack,
 		callback  = callback
-	},subscription)
+	}, subscription)
 
 	sub.onSizeChange = stack:onSizeChange(function()
 		sub.w, sub.h = sub.stack:normalizeSize(sub.origW, sub.origH)
 	end)
-	
+
 	sub.onPosChange = stack:onPosChange(function()
 		sub.x, sub.y = sub.stack:normalizePos(sub.origX, sub.origY)
 	end)
@@ -172,11 +175,11 @@ function subscription:emit(...)
 end
 
 function subscription:checkInside(x, y)
-	return x>self.x and x<self.x+self.w and y>self.y and y<self.y+self.h
+	return x > self.x and x < self.x + self.w and y > self.y and y < self.y + self.h
 end
 
 function subscription:checkOutside(x, y)
-	return not (x>self.x and x<self.x+self.w and y>self.y and y<self.y+self.h)
+	return not (x > self.x and x < self.x + self.w and y > self.y and y < self.y + self.h)
 end
 
 ---@alias InputMouseClickSubscriptionCallback fun(x:number, y:number, mouseButton:string)
@@ -196,8 +199,8 @@ input.__call = function(self, eventType, callback, cbOff, x, y, w, h)
 	y = y or 0
 	w = w or 1
 	h = h or 1
-	
-	return subscription.create(x,y,w,h,eventType,callback,cbOff)
+
+	return subscription.create(x, y, w, h, eventType, callback, cbOff)
 end
 
 --Since the introduction of the relative subscriptions, there is more utility in ommiting coordinates by default
@@ -211,19 +214,19 @@ function input.eventHandlers.mousereleased(x, y, btn)
 				sub.currentEvent = false
 				captured         = true
 				if sub.cleanUp then
-					sub.cleanUp(x-sub.x, y-sub.y, btn)
+					sub.cleanUp(x - sub.x, y - sub.y, btn)
 				end
 			end
 		end
-	end	
-	
+	end
+
 	if input.subscriptions.dragged then
 		for index, sub in ipairs(input.subscriptions.dragged) do
 			if sub.currentEvent and sub.active and sub.stack.element.settings.active then
 				sub.currentEvent = false
 				captured         = true
 				if sub.cleanUp then
-					sub.cleanUp(x-sub.x, y-sub.y)
+					sub.cleanUp(x - sub.x, y - sub.y)
 				end
 			end
 		end
@@ -232,20 +235,18 @@ function input.eventHandlers.mousereleased(x, y, btn)
 	if input.subscriptions.mousereleased then
 		for index, sub in ipairs(input.subscriptions.mousereleased) do
 			if sub.active and sub.stack.element.settings.active and sub:checkInside(x, y) then
-				sub:emit(x-sub.x, y-sub.y, btn)
+				sub:emit(x - sub.x, y - sub.y, btn)
 				captured = true
 			end
-
 		end
 	end
 
 	if input.subscriptions.mousereleased_outside then
 		for index, sub in ipairs(input.subscriptions.mousereleased_outside) do
 			if sub.active and sub.stack.element.settings.active and sub:checkOutside(x, y) then
-				sub:emit(x-sub.x, y-sub.y, btn)
+				sub:emit(x - sub.x, y - sub.y, btn)
 				captured = true
 			end
-
 		end
 	end
 
@@ -260,41 +261,37 @@ function input.eventHandlers.mousepressed(x, y, btn)
 			local succ = sub:checkInside(x, y)
 
 			if succ and sub.active and sub.stack.element.settings.active then
-				sub.cleanUp      = sub:emit(x-sub.x, y-sub.y, btn) or dummyfunc
+				sub.cleanUp      = sub:emit(x - sub.x, y - sub.y, btn) or dummyfunc
 				sub.currentEvent = true
 				return true
 			end
-
 		end
 	end
-	
+
 	if input.subscriptions.dragged then
 		for index, sub in ipairs(input.subscriptions.dragged) do
-			if sub.active and sub.stack.element.settings.active and sub:checkInside(x, y) then 
+			if sub.active and sub.stack.element.settings.active and sub:checkInside(x, y) then
 				sub.currentEvent = true
 				return true
 			end
-
 		end
 	end
 
 	if input.subscriptions.mousepressed then
 		for index, sub in ipairs(input.subscriptions.mousepressed) do
-			if sub.active and sub.stack.element.settings.active and sub:checkInside(x, y) then 
-				sub:emit(x-sub.x, y-sub.y, btn)
+			if sub.active and sub.stack.element.settings.active and sub:checkInside(x, y) then
+				sub:emit(x - sub.x, y - sub.y, btn)
 				return true
 			end
-
 		end
 	end
 
 	if input.subscriptions.mousepressed_outside then
 		for index, sub in ipairs(input.subscriptions.mousepressed_outside) do
 			if sub.active and sub.stack.element.settings.active and sub:checkOutside(x, y) then
-				sub:emit(x-sub.x, y-sub.y, btn)
+				sub:emit(x - sub.x, y - sub.y, btn)
 				return true
 			end
-
 		end
 	end
 	return captured
@@ -308,7 +305,6 @@ function input.eventHandlers.keypressed(btn, btncode)
 				sub:emit(btn, btncode)
 				captured = true
 			end
-
 		end
 	end
 
@@ -351,32 +347,31 @@ function input.eventHandlers.mousemoved(x, y, dx, dy)
 			local succ = sub:checkInside(x, y)
 
 			if sub.active and sub.stack.element.settings.active and not sub.currentEvent and succ then
-				sub.cleanUp      = sub:emit(x-sub.x, y-sub.y, dx, dy) or dummyfunc
+				sub.cleanUp      = sub:emit(x - sub.x, y - sub.y, dx, dy) or dummyfunc
 				sub.currentEvent = true
 				return true
 			elseif sub.currentEvent and not succ then
 				sub.currentEvent = false
 				if sub.cleanUp then
-					sub.cleanUp(x-sub.x, y-sub.y)
+					sub.cleanUp(x - sub.x, y - sub.y)
 				end
 				return true
 			end
 		end
 	end
 
-	
+
 	if input.subscriptions.dragged then
 		for index, sub in ipairs(input.subscriptions.dragged) do
 			if sub.active and sub.stack.element.settings.active and sub.currentEvent then
 				if not sub.cleanUp then
-					sub.cleanUp  = sub:emit(x-sub.x, y-sub.y, dx, dy) or dummyfunc
+					sub.cleanUp = sub:emit(x - sub.x, y - sub.y, dx, dy) or dummyfunc
 				else
-					sub:emit(x-sub.x, y-sub.y, dx, dy)
+					sub:emit(x - sub.x, y - sub.y, dx, dy)
 				end
 
 				return true
 			end
-
 		end
 	end
 
