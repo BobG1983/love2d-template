@@ -163,6 +163,3 @@ function love.draw()
   app:draw_ui()
   push:finish()
 end
-
--- TODO: Add the following
--- CI using Boon or love-release? (https://github.com/camchenry/boon)
