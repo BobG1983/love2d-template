@@ -77,6 +77,7 @@ AssetLoader = require "lib.lily"
 Physics = require "lib.windfield"
 UI = require "lib.helium"
 SceneManager = require "lib.roomy".new()
+Anim = require "lib.anim8"
 require "src.scenes.scene_list"
 
 -- Static Resolution Setup
