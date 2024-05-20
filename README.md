@@ -24,6 +24,7 @@
 * A simplified Box2D wrapped through the Physics global - via [Windfield](https://github.com/BobG1983/windfield)
 * A selection of lua utility functions through the Utils global - via [Lume](https://github.com/rxi/lume)
 * Release managemet via [Boon](https://github.com/camchenry/boon) - This must be installed seperately, see the link
+* A UI framework provided by [Helium](https://github.com/qeffects/helium)
 
 ## Getting Started
 1. Install [Love2D](https://love2d.org/)
