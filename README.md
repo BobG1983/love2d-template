@@ -25,7 +25,7 @@
 * A selection of lua utility functions through the Utils global - via [Lume](https://github.com/rxi/lume)
 * Release managemet via [Boon](https://github.com/camchenry/boon) - This must be installed seperately, see the link
 * A UI framework available through the UI global - via [Helium](https://github.com/qeffects/helium)
-* Sprite animation available through the ANIM global - via [Anim8](https://github.com/kikito/anim8)
+* Sprite animation available through the Anim global - via [Anim8](https://github.com/kikito/anim8)
 
 ## Getting Started
 1. Install [Love2D](https://love2d.org/)
